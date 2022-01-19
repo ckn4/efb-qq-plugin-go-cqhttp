@@ -54,8 +54,19 @@ efb-qq-plugin-go-cqhttp 是 efb-qq-slave 的插件，需要配合 efb-qq-slave �
 
 ## 配置 efb-qq-slave 端
 
-1. 安装 efb-qq-plugin-go-cqhttp `pip install git+https://github.com/XYenon/efb-qq-plugin-go-cqhttp`
-2. 为 `milkice.qq` 从端创建 `config.yaml` 配置文件
+1. 由于解码 QQ 所使用的 Silk 编码语音格式需要外部 C 库的支持，因此在安装阶段会编译解码器和编码器，请确保系统已经安装编译器和 Python Dev 头文件
+
+    对于 Debian/Ubuntu 系列发行版请执行
+
+    ``sudo apt install python3-dev build-essential``
+
+    对于 Redhat/CentOS 系列发行版请执行（注意，未经过测试）
+
+    ``sudo yum install python3-devel gcc gcc-c++ make``
+
+    因为涉及到编译第三方库，在安装过程中可能会失败，请结合日志分析原因处理，如果遇到难以处理的问题可以发 issue 询问
+2. 安装 efb-qq-plugin-go-cqhttp `pip install git+https://github.com/XYenon/efb-qq-plugin-go-cqhttp`
+3. 为 `milkice.qq` 从端创建 `config.yaml` 配置文件
 
    配置文件通常位于 `~/.ehforwarderbot/profiles/default/milkice.qq/config.yaml`
 
