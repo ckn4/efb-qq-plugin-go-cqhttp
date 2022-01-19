@@ -1,7 +1,6 @@
 import sys
 from os import listdir
 from os.path import isfile, join
-from pathlib import Path
 
 from setuptools import setup, find_packages, Extension
 
@@ -14,7 +13,7 @@ exec(open('efb_qq_plugin_go_cqhttp/__version__.py').read())
 long_description = open('README.md', encoding='utf-8').read()
 
 def get_file_list(path: str):
-    return tuple(Path(path).rglob("*.c"))
+    return [join(path, f) for f in listdir(path) if isfile(join(path, f)) and f.endswith('.c')]
 
 setup(
     name='efb-qq-plugin-go-cqhttp',
