@@ -8,6 +8,7 @@ from ehforwarderbot import Message, coordinator
 from pkg_resources import resource_filename
 
 import pydub as pydub
+from ehforwarderbot.exceptions import EFBMessageTypeNotSupported
 
 try:
     import Silkv3
@@ -759,7 +760,7 @@ def download_group_avatar(uid: str):
 
 def download_voice(filename: str, url: str):
     if not VOICE_SUPPORTED:
-        raise EOFError('not support')
+        raise EFBMessageTypeNotSupported()
     else:   
         input_file = tempfile.NamedTemporaryFile()
         try:
