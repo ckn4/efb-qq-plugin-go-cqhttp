@@ -773,7 +773,7 @@ def download_voice(filename: str, url: str):
         input_file.seek(0)
         output_file = tempfile.NamedTemporaryFile()
         if not Silkv3.decode(input_file.name, output_file.name):
-            raise EOFError('tran failed')
+            pydub.AudioSegment.from_file(file=input_file, format="amr", sample_width=2, frame_rate=24000, channels=1).export(output_file, format="s16le", parameters=['-ac', '1', '-ar', '24000'])
         pydub.AudioSegment.from_raw(file=output_file, sample_width=2, frame_rate=24000, channels=1) \
             .export(output_file, format="ogg", codec="libopus",
                     parameters=['-vbr', 'on'])
