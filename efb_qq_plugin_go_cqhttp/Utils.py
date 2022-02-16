@@ -710,7 +710,7 @@ def param_spliter(str_param):
     return param
 
 
-def download_file(download_url):
+def down_file(download_url):
     file = tempfile.NamedTemporaryFile()
     try:
         opener = urllib.request.build_opener()
@@ -758,22 +758,13 @@ def download_group_avatar(uid: str):
     return file
 
 
-def download_voice(filename: str, url: str):
+def download_voice(filename: str):
     if not VOICE_SUPPORTED:
         raise EFBMessageTypeNotSupported()
     else:   
-        input_file = tempfile.NamedTemporaryFile()
-        try:
-            urllib.request.urlretrieve(url, input_file.name)
-        except (URLError, HTTPError, ContentTooShortError) as e:
-            logging.getLogger(__name__).warning("Error occurs when downloading files: " + str(e))
-            return _("Error occurs when downloading files: ") + str(e)
-        if input_file.seek(0, 2) <= 0:
-            raise EOFError('File downloaded is Empty')
-        input_file.seek(0)
         output_file = tempfile.NamedTemporaryFile()
-        if not Silkv3.decode(input_file.name, output_file.name):
-            pydub.AudioSegment.from_file(file=input_file, format="amr", sample_width=2, frame_rate=24000, channels=1).export(output_file, format="s16le", parameters=['-ac', '1', '-ar', '24000'])
+        if not Silkv3.decode(filename, output_file.name):
+            pydub.AudioSegment.from_file(file=filename, format="amr", sample_width=2, frame_rate=24000, channels=1).export(output_file, format="s16le", parameters=['-ac', '1', '-ar', '24000'])
         pydub.AudioSegment.from_raw(file=output_file, sample_width=2, frame_rate=24000, channels=1) \
             .export(output_file, format="ogg", codec="libopus",
                     parameters=['-vbr', 'on'])

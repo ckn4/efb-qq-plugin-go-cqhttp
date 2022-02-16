@@ -29,7 +29,7 @@ from .ChatMgr import ChatManager
 from .Exceptions import CoolQDisconnectedException, CoolQAPIFailureException, CoolQOfflineException
 from .MsgDecorator import QQMsgProcessor
 from .Utils import qq_emoji_list, async_send_messages_to_master, process_quote_text, coolq_text_encode, \
-    download_user_avatar, download_group_avatar, download_file
+    download_user_avatar, download_group_avatar, down_file
 
 
 class GoCQHttp(BaseClient):
@@ -870,7 +870,7 @@ class GoCQHttp(BaseClient):
         return 'Done'
 
     def async_download_file(self, context, download_url):
-        res = download_file(download_url)
+        res = down_file(download_url)
         if isinstance(res, str):
             context['message'] = self._("[Download] ") + res
             self.send_efb_group_notice(context)
